@@ -59,7 +59,7 @@ def resize_lora_model(lora_sd, new_rank, save_dtype, device, verbose):
   scale = network_alpha/network_dim
   new_alpha = float(scale*new_rank)  # calculate new alpha from scale
 
-  print(f"old dimension: {network_dim}, old alpha: {network_alpha}, new alpha: {new_alpha}")
+  #print(f"old dimension: {network_dim}, old alpha: {network_alpha}, new alpha: {new_alpha}")
 
   lora_down_weight = None
   lora_up_weight = None
@@ -68,7 +68,7 @@ def resize_lora_model(lora_sd, new_rank, save_dtype, device, verbose):
   block_down_name = None
   block_up_name = None
 
-  print("resizing lora...")
+  print("сжатие LoRa...")
   with torch.no_grad():
     for key, value in tqdm(lora_sd.items()):
       if 'lora_down' in key:
@@ -136,7 +136,7 @@ def resize_lora_model(lora_sd, new_rank, save_dtype, device, verbose):
 
   if verbose:
     print(verbose_str)
-  print("resizing complete")
+  print("лора сжата")
   return o_lora_sd, network_dim, new_alpha
 
 
@@ -156,10 +156,10 @@ def resize(args):
   if save_dtype is None:
     save_dtype = merge_dtype
 
-  print("loading Model...")
+  #print("loading Model...")
   lora_sd, metadata = load_state_dict(args.model, merge_dtype)
 
-  print("resizing rank...")
+  #print("resizing rank...")
   state_dict, old_dim, new_alpha = resize_lora_model(lora_sd, args.new_rank, save_dtype, args.device, args.verbose)
 
   # update metadata
@@ -175,7 +175,7 @@ def resize(args):
   metadata["sshs_model_hash"] = model_hash
   metadata["sshs_legacy_hash"] = legacy_hash
 
-  print(f"saving model to: {args.save_to}")
+  print(f"лора сохранена: {args.save_to}")
   save_to_file(args.save_to, state_dict, state_dict, save_dtype, metadata)
 
 
