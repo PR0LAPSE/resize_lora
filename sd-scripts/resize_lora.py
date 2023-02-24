@@ -68,7 +68,7 @@ def resize_lora_model(lora_sd, new_rank, save_dtype, device, verbose):
   block_down_name = None
   block_up_name = None
 
-  print("сжатие LoRa...")
+  #print("сжатие LoRa...")
   with torch.no_grad():
     for key, value in tqdm(lora_sd.items()):
       if 'lora_down' in key:
